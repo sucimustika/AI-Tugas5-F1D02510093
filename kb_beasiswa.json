@@ -1,0 +1,87 @@
+
+{
+  "judul": "Sistem Pakar Klasifikasi Kelayakan Penerimaan Beasiswa",
+
+  "batas": "Aturan didasarkan pada parameter akademik dan administratif dari studi literatur pengelolaan beasiswa perguruan tinggi. Hasil berupa rekomendasi awal seleksi, bukan keputusan mutlak kelulusan.",
+
+  "sumber": {
+    "S1": "Ida Kumala Sari, Arief Hermawan, Donny Avianto, 'Klasifikasi Kelayakan Bantuan Pendidikan Menggunakan Metode Decision Tree', INSOLOGI: Jurnal Sains dan Teknologi, Vol. 5 No. 3, 2026.",
+    "S2": "Komang Rosmiani, et al., 'Analisis Kelayakan Penerimaan Bantuan Pendidikan Beasiswa Luwu Timur Tahun 2025 Menggunakan Metode Random Forest', Jurnal Dipakomti, Vol. 18 No. 1, 2026."
+  },
+
+  "pertanyaan": [
+    {
+      "teks": "Apakah IPK Anda minimal 3.00?",
+      "fakta_ya": "ipk >= 3.00"
+    },
+    {
+      "teks": "Apakah semester aktif Anda maksimal semester 8?",
+      "fakta_ya": "semester aktif <= 8"
+    },
+    {
+      "teks": "Apakah pembayaran biaya kuliah Anda lancar dan tidak memiliki tunggakan?",
+      "fakta_ya": "pembayaran biaya kuliah lancar",
+      "fakta_tidak": "pembayaran biaya kuliah menunggak"
+    },
+    {
+      "teks": "Apakah minimal 5 mata kuliah semester 2 Anda telah lulus?",
+      "fakta_ya": "jumlah mata kuliah semester 2 yang lulus >= 5"
+    },
+    {
+      "teks": "Apakah IPK Anda di bawah 2.75?",
+      "fakta_ya": "ipk < 2.75"
+    }
+  ],
+
+  "aturan": [
+    {
+      "id": "R1",
+      "jika": [
+        "ipk >= 3.00",
+        "semester aktif <= 8"
+      ],
+      "mode": "dan",
+      "maka": "akademik memenuhi syarat",
+      "sumber": "S2"
+    },
+    {
+      "id": "R2",
+      "jika": [
+        "akademik memenuhi syarat",
+        "pembayaran biaya kuliah lancar"
+      ],
+      "mode": "dan",
+      "maka": "administrasi keuangan lancar",
+      "sumber": "S1"
+    },
+    {
+      "id": "R3",
+      "jika": [
+        "administrasi keuangan lancar",
+        "jumlah mata kuliah semester 2 yang lulus >= 5"
+      ],
+      "mode": "dan",
+      "maka": "Rekomendasi: Layak Beasiswa Penuh",
+      "sumber": "S1"
+    },
+    {
+      "id": "R4",
+      "jika": [
+        "ipk < 2.75",
+        "pembayaran biaya kuliah menunggak"
+      ],
+      "mode": "atau",
+      "maka": "kendala evaluasi akademik atau keuangan",
+      "sumber": "S1"
+    },
+    {
+      "id": "R5",
+      "jika": [
+        "kendala evaluasi akademik atau keuangan"
+      ],
+      "mode": "dan",
+      "maka": "Rekomendasi: Tidak Layak / Ditolak",
+      "sumber": "S2"
+    }
+  ]
+}
